@@ -74,7 +74,7 @@ record publishes for its file on 10 November 2026. They matched, and the
 ## Relationship between the records
 
 The arXiv paper cites the artifact's version DOI
-<code>10.5281/zenodo.24035424</code>, in its reference list and in the
+<code>10.5281/zenodo.24035424</code> in its reference list and in the
 comments of its arXiv record. The Zenodo record declares itself
 <code>isDerivedFrom</code> the formal development of the Generalized DBLog
 paper, <code>10.5281/zenodo.22643866</code>. The file

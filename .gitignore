@@ -18,6 +18,7 @@ formal/lean/.lake/
 
 # TLC run output
 formal/tla/**/states/
+formal/tla/**/meta/
 
 # Deposit check downloads
 /artifact.zip

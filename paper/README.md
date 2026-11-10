@@ -28,8 +28,7 @@ pdflatex main
 
 The source bundle carries <code>main.bbl</code>, so BibTeX is not required
 for the exact public rebuild. The <code>acmart</code> class is not part of the
-bundle. It comes from the TeX distribution. arXiv built the paper with
-TeX Live 2025.
+bundle and comes from the TeX distribution. The arXiv build used TeX Live 2025.
 
 ## Public record
 

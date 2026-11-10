@@ -45,8 +45,8 @@ When sources differ, use this order:
    <code>formal/orphan_absence/</code> and its three dependency sessions are
    authoritative for what is proved.
 2. **formal/README.md** is the authoritative description of the artifact. It
-   names every proved statement, the assumptions outside the theories, and the
-   build instructions. <code>formal/lean/README.md</code> maps each Isabelle
+   names the main proved statements, the assumptions outside the theories, and
+   the build instructions. <code>formal/lean/README.md</code> maps each Isabelle
    name to its Lean name. <code>formal/tla/README.md</code> and
    <code>formal/tla/RUNS.md</code> describe the models and their runs.
 3. **paper/main.tex** is authoritative for the paper's design, its exposition,
@@ -70,26 +70,35 @@ does not check whether a real deployment satisfies those assumptions.
 A CDC pipeline keeps sinks, such as a search index or a data warehouse, in
 sync with a source database. DBLog-based incremental snapshots, as adopted by
 Debezium and Flink CDC, read the source tables in chunks interleaved with the
-log. A sink can drift after its bootstrap, and it can then hold orphan rows,
-which exist in the sink and no longer at the source. In DBLog's original
+log. After its bootstrap a sink can drift and end up holding orphan rows,
+which are still in the sink but no longer at the source. In DBLog's original
 design each chunk emits only the rows the table still contains, so it does not
 handle orphan rows.
 
-The paper extends the design with two mechanisms:
+The paper extends the design with three components:
 
-- **Statements of absence from a chunk read.** A chunk read also establishes
-  which keys of its key range the select did not return. The connector emits
-  this as a chunk info record, or rendered per key as absence events, and
-  sinks apply it as deletes.
-- **The request <code>verify-keys-absent</code>.** An external drift process
-  hands orphan candidates to the connector. The connector checks them with its
-  own read and emits absence events only for keys confirmed absent at the
-  source.
+- **The chunk info record.** A chunk read also establishes which keys of its
+  key range the select did not return. The connector emits a chunk info record
+  with each chunk's rows. It carries the chunk's key range, the selected keys
+  that the query returned, and the changed keys that have a change event inside
+  the watermark window. A sink that accepts the record deletes every key it
+  holds in the range that is neither selected nor changed. For key-partitioned
+  transports and for sinks that only accept per-key events, the connector can
+  instead emit per-key absence events, one for each absent candidate key
+  supplied to it. Sinks apply them as deletes.
+- **The request <code>verify-keys-absent</code>.** An external process submits
+  keys it suspects are orphans. The connector reads those keys at the source
+  between watermarks and emits an absence event for each key it confirms
+  absent. The requesting process never deletes from the sink directly.
+- **The drift process.** An external process inspects sinks for suspected
+  orphans and submits them through the request.
 
-These give three modes: the fully integrated mode, the mode with an external
+This gives three modes: the fully integrated mode, the mode with an external
 drift process, and the combination of both, which the paper recommends.
 
 ## Paper terms and mechanization names
+
+The paper and the mechanization use different names for a few objects.
 
 | Paper | Mechanization |
 |---|---|
@@ -97,15 +106,16 @@ drift process, and the combination of both, which the paper recommends.
 | the Lean 4 port | <code>OrphanAbsence</code> in <code>formal/lean/</code> |
 | selected keys and changed keys of a chunk info record | their union is the except set <code>except_keys</code> |
 | changed keys | touched keys |
-| the request <code>verify-keys-absent</code> | a bracketed key-list read, the later or interleaved read of the composition theories |
+| the request <code>verify-keys-absent</code> | a bracketed key-list read. It is the later read in <code>Orphan_Absence_Composition.thy</code> and the interleaved read in <code>Orphan_Absence_Interleaved.thy</code> |
 | Flink CDC's buffered range merge | <code>Orphan_Absence_Range_Merge.thy</code>, on the core's <code>Range_Merge</code> |
 
 ## Result map
 
 The paper states its guarantees in Section 8 in prose and does not number
-them. The main theorems by theory, all in <code>formal/orphan_absence/</code>.
-The full index is <code>docs/THEOREMS.md</code>, and
-<code>formal/README.md</code> describes every statement.
+them. The table lists the main theorems by theory. All theory files are in
+<code>formal/orphan_absence/</code>. The full index is
+<code>docs/THEOREMS.md</code>, and <code>formal/README.md</code> describes
+each of these statements.
 
 | Section 8 | Main Isabelle names | Theory | Lean |
 |---|---|---|---|
@@ -123,11 +133,11 @@ The full index is <code>docs/THEOREMS.md</code>, and
 | Misreading | Correction |
 |---|---|
 | "The paper verifies Debezium or Flink CDC." | The proofs verify the stream-level algorithm. No running connector is verified. |
-| "Every orphan is always removed." | Safety holds unconditionally in the model. Convergence holds if and only if the emitted absence statements cover every orphan held by the sink that the log stream never mentions. An orphan that neither a read nor the log stream mentions remains untouched. |
+| "Every orphan is always removed." | Safety needs no coverage condition. It holds from any initial sink state. Convergence holds if and only if the emitted absence statements cover every orphan held by the sink that the log stream never mentions. An orphan that neither a read nor the log stream mentions remains untouched. |
 | "The proofs cover the transport." | In a deployment they rely on the pipeline delivering each key's events in order. In-order at-least-once delivery is proved sufficient. Out-of-order delivery of one key's events is outside the formal model. |
 | "The proofs cover the database engine." | They rely on the chunk query visibility rule of Section 5.6, full row images in the log, complete SQL select scans, matching key order and equality between source and sink under a fixed schema, and on transaction atomicity and liveness. |
 | "Concurrent writers at the sink are covered." | Concurrent side writers during repair and row-versioned conflict resolution are outside the formal model. |
-| "Restart and failover are proved in general." | One connector restart that interrupts a pass outside a chunk's close is proved, provided the connector resumes from an offset committed during the pass and re-runs every unfinished chunk. More than one restart is not modeled in the theories. |
+| "Restart and failover are proved in general." | Safety and convergence are proved for one connector restart that interrupts a pass outside a chunk's close, provided the connector resumes from an offset committed during the pass and re-runs every unfinished chunk. More than one restart is not modeled in the theories. |
 | "Lean proves the same theorems as Isabelle." | The Lean port covers every theory except the Flink CDC range merge, which is proved in Isabelle only. |
 | "Model checking proves the protocol." | The TLA+ models are bounded and give evidence. They do not replace the proofs. Many configurations are mutations or witnesses that are built to produce a counterexample. |
 
@@ -183,9 +193,9 @@ lake build
 The Isabelle and TLC checks take time and need the tools named in
 <code>formal/README.md</code>. Do not run them unless the user asked for a
 build. Read the sources, <code>formal/lean/VERIFICATION.md</code> and
-<code>formal/tla/RUNS.md</code> instead. <code>lake build</code> writes a
-<code>.lake</code> directory into <code>formal/lean/</code>, which is ignored
-by git and is not part of the artifact.
+<code>formal/tla/RUNS.md</code> instead. <code>lake build</code> and TLC write
+their output into the tree. That output is ignored by git and is not part of
+the artifact.
 
 ### Deposit fidelity
 
@@ -204,7 +214,7 @@ No output from <code>diff</code> means byte identity.
 A short accurate summary is:
 
 > The paper extends DBLog-based incremental snapshots so that a CDC pipeline
-> can also delete orphan rows, which exist in a sink and no longer at the
+> can also delete orphan rows, which are still in a sink but no longer at the
 > source. A chunk read already knows which keys of its range the select did
 > not return, and the connector emits this as a new kind of event that sinks
 > apply as deletes. A repair request lets an external process hand orphan
