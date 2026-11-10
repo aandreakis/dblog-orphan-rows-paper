@@ -1,0 +1,33 @@
+chapter Study
+
+session Orphan_Absence = DBLog_Framework_Core +
+  description "
+    Additive theory on top of the Generalized DBLog contract core:
+    the window-discard emission extended with enumerated absence
+    entries (per-key absent events for keys read as absent and
+    untouched inside the bracket), replayed from an ARBITRARY initial
+    sink state. Covers the sink-expanded range record, the connector
+    sink-read variant, dense-key enumeration and inventory digests as
+    choices of the enumeration. Orphan_Absence_Range_Merge does the
+    same for the core's buffered range merge (Flink CDC), with the
+    held-back deletes re-emitted at the close, and
+    Orphan_Absence_Composition composes a full pass with a later
+    bracketed read such as a key-list request. Orphan_Absence_Interleaved
+    serves a key-list request while the pass is still running,
+    Orphan_Absence_Replay transfers the results to in-order
+    at-least-once delivery of each key's events, and
+    Orphan_Absence_Tiling proves that a pass's chunk ranges tile the
+    key space and are exact for their reads, with a bridge to the
+    contract, and Orphan_Absence_Restart states the stream a sink sees
+    across one connector restart. Nothing in the archived development is
+    modified; this session only imports it.
+  "
+  options [timeout = 600]
+  theories
+    Orphan_Absence
+    Orphan_Absence_Range_Merge
+    Orphan_Absence_Composition
+    Orphan_Absence_Interleaved
+    Orphan_Absence_Replay
+    Orphan_Absence_Tiling
+    Orphan_Absence_Restart

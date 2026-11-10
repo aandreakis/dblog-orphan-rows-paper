@@ -1,0 +1,48 @@
+chapter AFP
+
+session DBLog_Framework_Core = "HOL-Library" +
+  description "
+    Machine-checked theorem core for Generalized DBLog: one
+    source-side contract for bracketed state capture interleaved with a
+    commit-ordered log, of which classic watermarked DBLog, write-free
+    (read-only) capture, parallel chunking, LSN-positioned selects, and
+    native-dump splices are instances at stated
+    guarantee levels and certification status.
+
+    The development proves the contract-level cut theorem and its
+    corollaries, the classic DBLog and executed-GTID-set instances,
+    window-discard and buffered-range-merge equivalence, parallel
+    chunking, point splices with a shared state witness, and
+    uncertainty-bracket degradation. Coordinates denote nested log
+    prefixes with a membership oracle, windows are half-open, plans
+    are final partitions, bracket-local validity is per-key
+    existential, and refresh-at-lo latest-wins is the canonical merge
+    rule with equivalence obligations for real disciplines.
+
+    The classic DBLog formalization is imported as the separate
+    DBLog_Virtual_Cuts session. It preserves the published v2.1
+    mathematical content under a shared-session refactoring documented
+    in ARTIFACT_PROVENANCE.md at the archive root. The original
+    published archive and the source comparison are included.
+
+    The development is axiom-free: no axiomatization, typedecl, consts,
+    or sorry; witnesses are constructed models.
+
+    Licensed under the BSD 3-Clause license (SPDX header on every theory).
+  "
+  options [timeout = 600, document = pdf, document_output = "output"]
+  sessions
+    DBLog_Virtual_Cuts
+  theories
+    Contract_Base
+    Cut_Theorem
+    Merge_Disciplines
+    Contract_Witnesses
+    Classic_Instance
+    ReadOnly_Instance
+    Range_Merge
+    Parallel_Chunks_Instance
+    Dump_Splice_Instance
+  document_files
+    "root.tex"
+    "root.bib"

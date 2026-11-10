@@ -1,0 +1,238 @@
+\begin{thebibliography}{27}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Kleppmann et~al.(2019)Kleppmann, Beresford, and
+  Svingen]{kleppmann2019olep}
+Martin Kleppmann, Alastair~R. Beresford, and Boerge Svingen.
+\newblock Online event processing: Achieving consistency where distributed
+  transactions have failed.
+\newblock \emph{Communications of the {ACM}}, 62\penalty0 (5):\penalty0 43--49,
+  2019.
+\newblock \doi{10.1145/3312527}.
+
+\bibitem[Laigner et~al.(2021)Laigner, Zhou, Salles, Liu, and
+  Kalinowski]{laigner2021microservices}
+Rodrigo Laigner, Yongluan Zhou, Marcos Antonio~Vaz Salles, Yijian Liu, and
+  Marcos Kalinowski.
+\newblock Data management in microservices: State of the practice, challenges,
+  and research directions.
+\newblock \emph{Proceedings of the {VLDB} Endowment}, 14\penalty0
+  (13):\penalty0 3348--3361, 2021.
+\newblock \doi{10.14778/3484224.3484232}.
+
+\bibitem[Andreakis and Papapanagiotou(2020)]{andreakis2020dblog}
+Andreas Andreakis and Ioannis Papapanagiotou.
+\newblock {DBLog}: A watermark based change-data-capture framework, 2020.
+\newblock URL \url{https://arxiv.org/abs/2010.12597}.
+\newblock arXiv:2010.12597v1, 23 October 2020.
+
+\bibitem[Cranford(2021)]{debezium_16_final}
+Chris Cranford.
+\newblock {Debezium} 1.6.0.{Final} released.
+\newblock Debezium Blog, 30 June 2021,
+  \url{https://debezium.io/blog/2021/06/30/debezium-1-6-final-released/}, 2021.
+\newblock Accessed 2 November 2026.
+
+\bibitem[Pechanec(2021)]{debezium_incremental_snapshots}
+Jiri Pechanec.
+\newblock Incremental snapshots in {Debezium}.
+\newblock Debezium Blog, 7 October 2021,
+  \url{https://debezium.io/blog/2021/10/07/incremental-snapshots/}, 2021.
+\newblock Accessed 2 November 2026.
+
+\bibitem[{Apache Flink CDC Community}(2026)]{flinkcdc_mysql}
+{Apache Flink CDC Community}.
+\newblock {MySQL} {CDC} connector.
+\newblock Apache Flink CDC documentation (stable),
+  \url{https://nightlies.apache.org/flink/flink-cdc-docs-stable/docs/connectors/flink-sources/mysql-cdc/},
+  2026.
+\newblock Flink CDC 3.7.0 documentation, accessed 2 November 2026.
+
+\bibitem[Andreakis(2026{\natexlab{a}})]{andreakis2026generalized}
+Andreas Andreakis.
+\newblock Generalized {DBLog}: A verified contract for interleaving copied rows
+  with a change log, 2026{\natexlab{a}}.
+\newblock URL \url{https://arxiv.org/abs/2609.08160}.
+\newblock arXiv:2609.08160v4, 5 October 2026.
+
+\bibitem[Andreakis and Papapanagiotou(2019)]{dblog_netflix_blog}
+Andreas Andreakis and Ioannis Papapanagiotou.
+\newblock {DBLog}: A generic change-data-capture framework.
+\newblock Netflix Technology Blog, 17 December 2019,
+  \url{https://netflixtechblog.com/dblog-a-generic-change-data-capture-framework-69351fb9099b},
+  2019.
+\newblock Accessed 2 November 2026.
+
+\bibitem[Andreakis(2026{\natexlab{b}})]{generalized_dblog_artifact}
+Andreas Andreakis.
+\newblock Formal development for ``{Generalized DBLog: A Verified Contract for
+  Interleaving Copied Rows with a Change Log}''.
+\newblock Zenodo, \url{https://doi.org/10.5281/zenodo.22643866},
+  2026{\natexlab{b}}.
+\newblock Isabelle/HOL, Lean~4 and TLA\textsuperscript{+} sources.
+
+\bibitem[{Debezium Community}(2026{\natexlab{a}})]{debezium_signalling}
+{Debezium Community}.
+\newblock Sending signals to a {Debezium} connector.
+\newblock Debezium reference (stable),
+  \url{https://debezium.io/documentation/reference/stable/configuration/signalling.html},
+  2026{\natexlab{a}}.
+\newblock Debezium 3.7 reference documentation, accessed 2 November 2026.
+
+\bibitem[{Debezium Community}(2026{\natexlab{b}})]{debezium_mysql_connector}
+{Debezium Community}.
+\newblock {Debezium} connector for {MySQL}.
+\newblock Debezium reference (stable),
+  \url{https://debezium.io/documentation/reference/stable/connectors/mysql.html},
+  2026{\natexlab{b}}.
+\newblock Debezium 3.7 reference documentation, accessed 2 November 2026.
+
+\bibitem[Galieva(2022)]{debezium_readonly_blog}
+Kate Galieva.
+\newblock Read-only incremental snapshots for {MySQL}.
+\newblock Debezium Blog, 7 April 2022,
+  \url{https://debezium.io/blog/2022/04/07/read-only-incremental-snapshots/},
+  2022.
+\newblock Accessed 2 November 2026.
+
+\bibitem[{Debezium
+  Community}(2026{\natexlab{c}})]{debezium_postgresql_connector}
+{Debezium Community}.
+\newblock {Debezium} connector for {PostgreSQL}.
+\newblock Debezium reference (stable),
+  \url{https://debezium.io/documentation/reference/stable/connectors/postgresql.html},
+  2026{\natexlab{c}}.
+\newblock Debezium 3.7 reference documentation, accessed 2 November 2026.
+
+\bibitem[{Apache Kafka Community}(2026{\natexlab{a}})]{kafka_docs}
+{Apache Kafka Community}.
+\newblock {Kafka} documentation: Design, log compaction, and topic-level
+  configs.
+\newblock Apache Kafka 4.4 documentation,
+  \url{https://kafka.apache.org/44/design/design/\#log-compaction} and
+  \url{https://kafka.apache.org/44/configuration/topic-configs/},
+  2026{\natexlab{a}}.
+\newblock Accessed 2 November 2026.
+
+\bibitem[{Oracle Corporation}(2026{\natexlab{a}})]{mysql_binlog_expire}
+{Oracle Corporation}.
+\newblock {MySQL} 8.4 reference manual: Binary logging options and variables.
+\newblock
+  \url{https://dev.mysql.com/doc/refman/8.4/en/replication-options-binary-log.html},
+  2026{\natexlab{a}}.
+\newblock Accessed 2 November 2026.
+
+\bibitem[{PostgreSQL Global Development
+  Group}(2026)]{postgres_replication_slots}
+{PostgreSQL Global Development Group}.
+\newblock {PostgreSQL} 18 documentation: Replication (19.6) and logical
+  decoding concepts (47.2).
+\newblock
+  \url{https://www.postgresql.org/docs/18/runtime-config-replication.html} and
+  \url{https://www.postgresql.org/docs/18/logicaldecoding-explanation.html\#LOGICALDECODING-REPLICATION-SLOTS},
+  2026.
+\newblock Accessed 5 November 2026.
+
+\bibitem[{Apache Kafka Community}(2026{\natexlab{b}})]{kafka_connect_configs}
+{Apache Kafka Community}.
+\newblock {Kafka Connect} configs.
+\newblock Apache Kafka 4.4 documentation,
+  \url{https://kafka.apache.org/44/configuration/kafka-connect-configs/},
+  2026{\natexlab{b}}.
+\newblock Accessed 2 November 2026.
+
+\bibitem[{Percona}(2026)]{percona_pt_table_checksum}
+{Percona}.
+\newblock {Percona Toolkit} documentation: pt-table-checksum.
+\newblock
+  \url{https://docs.percona.com/percona-toolkit/pt-table-checksum.html}, 2026.
+\newblock Accessed 5 November 2026.
+
+\bibitem[{Debezium Community}(2026{\natexlab{d}})]{debezium_jdbc_sink}
+{Debezium Community}.
+\newblock {Debezium} connector for {JDBC}.
+\newblock Debezium reference (stable),
+  \url{https://debezium.io/documentation/reference/stable/connectors/jdbc.html},
+  2026{\natexlab{d}}.
+\newblock Debezium 3.7 reference documentation, accessed 2 November 2026.
+
+\bibitem[{Confluent, Inc.}(2026)]{confluent_sinks}
+{Confluent, Inc.}
+\newblock {JDBC} sink and {Elasticsearch} sink connector configuration
+  properties.
+\newblock
+  \url{https://docs.confluent.io/kafka-connectors/jdbc/current/sink-connector/sink_config_options.html}
+  and
+  \url{https://docs.confluent.io/kafka-connectors/elasticsearch/current/configuration_options.html},
+  2026.
+\newblock Current documentation, accessed 2 November 2026.
+
+\bibitem[{Debezium Community}(2026{\natexlab{e}})]{debezium_event_flattening}
+{Debezium Community}.
+\newblock New record state extraction ({Debezium} transformation).
+\newblock Debezium reference (stable),
+  \url{https://debezium.io/documentation/reference/stable/transformations/event-flattening.html},
+  2026{\natexlab{e}}.
+\newblock Debezium 3.7 reference documentation, accessed 2 November 2026.
+
+\bibitem[{PostgreSQL Global Development Group}(2025)]{postgres_xact_source}
+{PostgreSQL Global Development Group}.
+\newblock {PostgreSQL} 18.0 source code, file
+  src/backend/access/transam/xact.c.
+\newblock Functions CommitTransaction and RecordTransactionCommit, release tag
+  REL\_18\_0,
+  \url{https://github.com/postgres/postgres/blob/REL_18_0/src/backend/access/transam/xact.c},
+  2025.
+\newblock Accessed 7 November 2026.
+
+\bibitem[{Oracle Corporation}(2026{\natexlab{b}})]{goldengate_veridata}
+{Oracle Corporation}.
+\newblock Using {Oracle GoldenGate Veridata} 12c (12.2.1.4): Working with jobs.
+\newblock
+  \url{https://docs.oracle.com/en/middleware/goldengate/veridata/12.2.1.4/gvdug/working-jobs.html},
+  2026{\natexlab{b}}.
+\newblock Accessed 2 November 2026.
+
+\bibitem[{Amazon Web Services}(2026)]{aws_dms_resync}
+{Amazon Web Services}.
+\newblock {AWS Database Migration Service} user guide: Data resync and data
+  validation.
+\newblock
+  \url{https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Validating.DataResync.html}
+  and
+  \url{https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Validating.html},
+  2026.
+\newblock Accessed 2 November 2026.
+
+\bibitem[Andreakis(2026{\natexlab{c}})]{orphan_absence_artifact}
+Andreas Andreakis.
+\newblock Formal development for ``{Extending DBLog-Based Incremental Snapshots
+  to Handle Orphan Rows in CDC Pipelines}''.
+\newblock Zenodo, \url{https://doi.org/10.5281/zenodo.24035424},
+  2026{\natexlab{c}}.
+\newblock Isabelle/HOL (\mbox{Isabelle2025-2}), Lean~4 and
+  TLA\textsuperscript{+} sources, builds on the Generalized DBLog contract
+  core.
+
+\bibitem[{Sombers Associates and W. H.
+  Highleyman}(2007)]{availability_digest_2007}
+{Sombers Associates and W. H. Highleyman}.
+\newblock {Shadowbase}: The active/active solution.
+\newblock The Availability Digest, March 2007,
+  \url{https://availabilitydigest.com/public_articles/0203/shadowbase.pdf},
+  2007.
+\newblock Accessed 2 November 2026.
+
+\bibitem[Zeilenga and Choi(2006)]{rfc4533}
+Kurt Zeilenga and Jong~Hyuk Choi.
+\newblock The lightweight directory access protocol ({LDAP}) content
+  synchronization operation.
+\newblock RFC 4533, June 2006, \url{https://www.rfc-editor.org/rfc/rfc4533},
+  2006.
+\newblock Accessed 2 November 2026.
+
+\end{thebibliography}

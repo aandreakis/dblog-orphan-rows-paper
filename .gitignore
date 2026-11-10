@@ -1,0 +1,27 @@
+# LaTeX build products
+paper/*.aux
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+paper/main.pdf
+
+# Isabelle build output
+formal/**/output/
+formal/**/.isabelle/
+
+# Lean build output
+formal/lean/.lake/
+
+# TLC run output
+formal/tla/**/states/
+
+# Deposit check downloads
+/artifact.zip
+/DBLog_Orphan_Absence_artifact-1.0/
+
+# OS metadata
+.DS_Store

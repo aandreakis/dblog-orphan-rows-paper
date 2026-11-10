@@ -1,0 +1,25 @@
+chapter AFP
+
+session Dual_Write_Layer0 = "HOL-Library" +
+  description "
+    Shared Layer-0 substrate for the DBLog virtual-cut development and the
+    Dual-Write Complete development. It contains the source-coordinate,
+    source-history, scope, replay, and virtual-cut-state interface constants
+    that both downstream AFP entries import with one theory provenance.
+
+    This entry is intentionally below both DBLog_Virtual_Cuts and
+    Dual_Write_Core: it contains no DBLog run, certificate, checker, dual-write
+    execution, or downstream-store machinery. Its purpose is to make the common
+    source/replay interface a single HOL substrate rather than two copied
+    bodies guarded only by release-time drift checks.
+  "
+  options [timeout = 600, document = pdf, document_output = "output"]
+  theories
+    Source_History
+    Source_Coordinates
+    Scope
+    Replay
+    Virtual_Cut_State
+  document_files
+    "root.tex"
+    "root.bib"

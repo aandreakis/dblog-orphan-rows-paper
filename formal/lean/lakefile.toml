@@ -1,0 +1,9 @@
+name = "OrphanAbsence"
+version = "0.1.0"
+defaultTargets = ["DBLogContract", "OrphanAbsence"]
+
+[[lean_lib]]
+name = "DBLogContract"
+
+[[lean_lib]]
+name = "OrphanAbsence"

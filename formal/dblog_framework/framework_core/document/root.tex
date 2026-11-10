@@ -1,0 +1,71 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{isabelle,isabellesym}
+\usepackage{amssymb}
+\usepackage{booktabs}
+
+% this should be the last package used
+\usepackage{pdfsetup}
+
+% urls in roman style, theory text in math-similar italics
+\urlstyle{rm}
+\isabellestyle{it}
+
+% Generated theory text carries long unbreakable identifiers; allow
+% extra stretch before lines protrude into the margin.
+\emergencystretch=3em
+
+\begin{document}
+
+\title{DBLog Framework Core:\\
+  A Source-Side Contract for Bracketed State Capture\\
+  Interleaved with a Commit-Ordered Log}
+\author{Andreas Andreakis}
+\maketitle
+
+\begin{abstract}
+  Machine-checked theorem core for Generalized DBLog. One
+  source-side contract --- coordinates denoting nested log prefixes
+  with a membership oracle, half-open capture windows, per-unit
+  refreshes with per-key existential (bracket-local) validity, and a
+  canonical latest-wins replay --- is formalized together with its
+  contract-level virtual-cut theorem and the instance work connecting
+  it to the published formal study of classic watermarked
+  DBLog~\cite{andreakis2026theoretical} (whose
+  \emph{DBLog\_Virtual\_Cuts} session~\cite{andreakis2026artifact} is
+  imported as a separate session with a shared-session refactoring
+  that preserves the published mathematical content) and to write-free
+  capture in the style of
+  read-only incremental snapshots. The protocol family under study is
+  that of DBLog~\cite{andreakis2020dblog}: bracketed full-state
+  capture interleaved with a commit-ordered change log.
+\end{abstract}
+
+\tableofcontents
+
+\section*{Vocabulary}
+The paper calls obligation O2 \emph{bracket-local validity}, the values a
+refresh assigns \emph{read results}, the buffer of the range-merge
+discipline the \emph{merged result}, and the coordinate of Corollary~1 a
+\emph{shared state witness}. The prose of this development uses those
+terms. Its formal identifiers keep the earlier names under which the
+proofs were checked, namely \texttt{O2\_honest}, \texttt{honest},
+\texttt{wit\_honest}, \texttt{wf\_read\_honest},
+\texttt{refresh\_honest\_at\_rec}, \texttt{mixing\_shared\_honesty\_lift},
+\texttt{wit\_sync\_memberA\_shared\_honesty}, and
+\texttt{wit\_sync\_memberB\_shared\_honesty}. Read \emph{honest} as
+\emph{valid} wherever an identifier carries it.
+
+% generated text of all theories
+\input{session}
+
+% optional bibliography
+\bibliographystyle{abbrv}
+\bibliography{root}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

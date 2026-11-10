@@ -1,0 +1,49 @@
+cff-version: 1.2.0
+message: >-
+  If you refer to this work, please cite the paper. When the exact bytes of
+  the verification artifact matter, also cite the archived Zenodo version.
+title: >-
+  Extending DBLog-Based Incremental Snapshots to Handle Orphan Rows in CDC
+  Pipelines: paper sources and formal verification artifact
+abstract: >-
+  Information hub for the paper "Extending DBLog-Based Incremental Snapshots
+  to Handle Orphan Rows in CDC Pipelines." Contains the paper sources as
+  posted to arXiv and the complete formal verification artifact (Isabelle/HOL,
+  Lean 4, TLA+), byte-identical to its archived Zenodo version 1.0 deposit.
+type: software
+authors:
+  - family-names: Andreakis
+    given-names: Andreas
+    orcid: https://orcid.org/0009-0003-9025-9402
+version: "1.0"
+date-released: "2026-11-07"
+doi: 10.5281/zenodo.24035423
+repository-code: https://github.com/aandreakis/dblog-orphan-rows-paper
+url: https://arxiv.org/abs/2611.10810
+license:
+  - BSD-3-Clause
+  - CC-BY-4.0
+keywords:
+  - change data capture
+  - CDC
+  - database replication
+  - databases
+  - formal verification
+  - Isabelle/HOL
+  - Lean
+  - TLA+
+  - DBLog
+  - orphan rows
+preferred-citation:
+  type: article
+  title: >-
+    Extending DBLog-Based Incremental Snapshots to Handle Orphan Rows in CDC
+    Pipelines
+  authors:
+    - family-names: Andreakis
+      given-names: Andreas
+      orcid: https://orcid.org/0009-0003-9025-9402
+  year: 2026
+  doi: 10.48550/arXiv.2611.10810
+  url: https://arxiv.org/abs/2611.10810
+  notes: arXiv:2611.10810v1 [cs.DB], 7 November 2026

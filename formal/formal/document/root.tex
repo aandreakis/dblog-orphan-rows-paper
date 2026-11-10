@@ -1,0 +1,228 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{isabelle,isabellesym}
+\usepackage{amssymb}
+\usepackage{booktabs}
+
+% this should be the last package used
+\usepackage{pdfsetup}
+
+% urls in roman style, theory text in math-similar italics
+\urlstyle{rm}
+\isabellestyle{it}
+
+% ToC: widen the subsection number box (two-component numbers >= 10
+% otherwise abut their titles) and the right margin reserved for page
+% numbers (long generated headings otherwise collide with them).
+\makeatletter
+\renewcommand*\l@subsection{\@dottedtocline{2}{1.5em}{3.3em}}
+\renewcommand\@tocrmarg{4.2em}
+\makeatother
+
+% Generated theory text carries long unbreakable identifiers; allow
+% extra stretch before lines protrude into the margin.
+\emergencystretch=3em
+
+\begin{document}
+
+\title{DBLog Virtual Cuts:\\
+  Certified Snapshot-Equivalent Replay of Live Databases}
+\author{Andreas Andreakis}
+\maketitle
+
+\begin{abstract}
+  DBLog reconstructs a logical, replay-equivalent snapshot of a live
+  database scope without taking a physical database snapshot, by
+  interleaving chunked reads with change-data-capture (CDC) events.
+  This entry machine-checks the theory behind that protocol, following
+  the companion paper~\cite{andreakis2026theoretical}: it formalizes
+  \emph{certified virtual cuts} --- finite, asynchronously gathered
+  mixes of CDC events and chunk reads whose certified replay reaches
+  the source state at a chosen frontier on a chosen key scope --- and
+  proves the layered theorem ladder relating run wellformedness,
+  verifier acceptance, and replay equality, together with a
+  source-side continuation and restriction algebra and a whole-table
+  specialization.
+
+  The development is axiom-free: it contains no
+  \isa{axiomatization}, \isa{typedecl}, or \isa{consts} declaration,
+  and its only \isa{typedef} is a conservative copy of the naturals
+  for source coordinates. All witnesses and fixtures are constructed
+  models with locale interpretations, and a closing non-vacuity
+  theory exercises every main theorem at concrete witnesses, the
+  certificate-layer results at genuinely accepted certificates. Every theorem is conditional on the premises stated
+  in its statement; the machine check does not discharge the
+  deployment obligations or the external-observation assumption that
+  a real deployment must establish.
+\end{abstract}
+
+\tableofcontents
+
+\newpage
+
+\section*{Entry overview}
+\addcontentsline{toc}{section}{Entry overview}
+
+\subsection*{What is proved}
+
+The load-bearing spine is the Layer~2 result: the canonical clean
+prefix of a wellformed DBLog run, replayed from the empty state,
+reproduces the source state at the run's frontier restricted to the
+run's scope (\isa{wellformed{\isacharunderscore}run{\isacharunderscore}implies{\isacharunderscore}virtual{\isacharunderscore}cut});
+the base state enters through the chunk reads, not the replay seed.
+On top of it sit an interface layer and an algebra:
+
+\begin{itemize}
+\item \emph{Layer 3 (certificates).} Inside the
+  \isa{layer{\isadigit{3}}{\isacharunderscore}checker{\isacharunderscore}substrate}
+  locale --- which abstracts the verifier as a set of soundness
+  obligations --- an accepted certificate under faithful source
+  observation replays to the source state at the certified frontier
+  on the certified scope. The obligations are proved for the concrete
+  verifier shipped with the entry, so the locale hypotheses are
+  satisfiable.
+\item \emph{Layer 4 (whole table).} The specialization of the Layer~3
+  result to whole-table claim scopes: the replay reproduces the
+  entire source state.
+\item \emph{Continuation algebra.} Source-side continuation across
+  frontiers (appending the faithful CDC segment for a half-open
+  frontier interval), sub-scope restriction, the whole-table
+  continuation instance, and an accepted-certificate continuation
+  result.
+\end{itemize}
+
+By name, the nine main theorems are
+\isa{wellformed{\isacharunderscore}run{\isacharunderscore}implies{\isacharunderscore}virtual{\isacharunderscore}cut}
+(Layer~2);
+\isa{accepted{\isacharunderscore}certificate{\isacharunderscore}implies{\isacharunderscore}wellformed{\isacharunderscore}run}
+and \isa{accepted{\isacharunderscore}virtual{\isacharunderscore}cut{\isacharunderscore}sound}
+(Layer~3, in the checker locale);
+\isa{accepted{\isacharunderscore}whole{\isacharunderscore}table{\isacharunderscore}anchor{\isacharunderscore}domain{\isacharunderscore}specialization}
+(Layer~4, in the checker locale); the four state-level
+continuation/restriction results
+\isa{virtual{\isacharunderscore}cut{\isacharunderscore}state{\isacharunderscore}continuation},
+\isa{virtual{\isacharunderscore}cut{\isacharunderscore}state{\isacharunderscore}restrict{\isacharunderscore}scope},
+\isa{whole{\isacharunderscore}table{\isacharunderscore}state{\isacharunderscore}continuation},
+and
+\isa{virtual{\isacharunderscore}cut{\isacharunderscore}restrict{\isacharunderscore}to{\isacharunderscore}subscope};
+and
+\isa{accepted{\isacharunderscore}certificate{\isacharunderscore}continuation{\isacharunderscore}sound}
+(both in the theory \isa{Continuation}). The
+closing theory fires each of the nine at concrete witnesses ---
+the certificate-layer results at genuinely accepted certificates.
+
+Composition is proved; single-coordinate chunk-read attribution and
+CDC faithfulness are explicit premises, and the operational watermark
+is not a formal object the theorems consult. The deployment
+obligations and the external-observation assumption of the
+paper~\cite{andreakis2026theoretical} appear here as explicit theorem
+premises and locale obligations; the entry makes them visible rather
+than discharging them. The protocol itself is from the original DBLog
+system paper~\cite{andreakis2020dblog}. This document corresponds to
+version~2.1 of the development, archived on
+Zenodo~\cite{andreakis2026artifact}; its frozen predecessors remain
+separately archived (v2.0 at DOI 10.5281/zenodo.20652511, v1.0 at DOI
+10.5281/zenodo.20389697). The
+development is distributed under the BSD 3-Clause license.
+
+\subsection*{Trust base}
+
+The session and its shared
+\isa{Dual{\isacharunderscore}Write{\isacharunderscore}Layer{\isadigit{0}}}
+parent contain no \isa{axiomatization}, \isa{typedecl}, or
+\isa{consts} declaration. The development's single \isa{typedef} ---
+in the parent theory \isa{Source{\isacharunderscore}History} ---
+introduces the source-coordinate type as a copy of \isa{nat} (a
+conservative extension over a provably nonempty set), with its
+\isa{linorder} and
+\isa{order{\isacharunderscore}bot} instances proved. Witness and
+fixture facts are established constructively: concrete models are
+exhibited as closed-form data and the substrate locales are
+interpreted at them. The final theory,
+\isa{Public{\isacharunderscore}Checker{\isacharunderscore}Witness},
+exhibits concrete certificate/evidence pairs the verifier genuinely
+accepts and fires all nine main theorems at them, so none of the
+headline results is vacuously true.
+
+\subsection*{Modelling notes}
+
+The key type \isa{{\isacharprime}k} carries a \isa{linorder}
+hypothesis in the run- and certificate-layer theorems: it enters
+through the canonical clean-prefix construction, which enumerates
+chunk-read domains with
+\isa{sorted{\isacharunderscore}list{\isacharunderscore}of{\isacharunderscore}set}
+and interleaves emitted events by source coordinate with a stable
+\isa{sort{\isacharunderscore}key}, making the construction
+deterministic. The four state-level continuation/restriction results
+are constraint-free. Database primary keys are totally ordered in
+practice, so the hypothesis does not narrow the intended
+interpretation.
+
+Source coordinates abstract positions in the source's totally ordered
+change history (in deployments: a commit timestamp, log sequence
+number, or binlog position). Chunk identifiers are plain naturals;
+the run and certificate carriers are single-constructor datatypes
+with named selectors.
+
+\subsection*{Layer-to-theory map}
+
+\begin{center}\small
+\begin{tabular}{@{}l p{0.58\textwidth}@{}}
+\toprule
+Layer & Theories \\
+\midrule
+0 (source/replay substrate) & \isa{Source{\isacharunderscore}History}, \isa{Replay}, \isa{Scope}, \isa{Source{\isacharunderscore}Coordinates}, \isa{Virtual{\isacharunderscore}Cut{\isacharunderscore}State} --- the shared \isa{Dual{\isacharunderscore}Write{\isacharunderscore}Layer{\isadigit{0}}} parent session \\
+0/1 (carrier-independent run core) & \isa{DBLog{\isacharunderscore}Run{\isacharunderscore}Core} \\
+2--4 (carrier-independent cut core) & \isa{Virtual{\isacharunderscore}Cut{\isacharunderscore}Core} \\
+1 (runs and wellformedness) & \isa{DBLog{\isacharunderscore}Run}, \isa{DBLog{\isacharunderscore}Run{\isacharunderscore}Substrate} \\
+2 (run-side soundness) & \isa{DBLog{\isacharunderscore}Run{\isacharunderscore}Substrate{\isacharunderscore}Layer{\isadigit{2}}} \\
+2--3 (virtual cuts, certificates) & \isa{Virtual{\isacharunderscore}Cut} \\
+3--4 (certificate substrate locales) & \isa{DBLog{\isacharunderscore}Cert{\isacharunderscore}Substrate}(\isa{{\isacharunderscore}Inst}) \\
+4 (whole table) & \isa{Layer{\isadigit{4}}{\isacharunderscore}Whole{\isacharunderscore}Table} \\
+post-core extension & \isa{Continuation} \\
+witnesses/fixtures & the \isa{{\isacharunderscore}Core}/\isa{{\isacharunderscore}Model}/\isa{{\isacharunderscore}Inst} families and the \isa{Layer{\isadigit{3}}{\isacharunderscore}Defect{\isacharunderscore}Regressions} regression theory \\
+non-vacuity gate & \isa{Public{\isacharunderscore}Checker{\isacharunderscore}Witness} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The witness/fixture families follow a uniform division of labor:
+\isa{{\isacharunderscore}Core} theories hold carrier-independent data
+(named coordinates, base states, source histories, expected values),
+\isa{{\isacharunderscore}Model} theories exhibit small concrete
+carrier realizations, and \isa{{\isacharunderscore}Inst} theories
+interpret the substrate locales at those models and prove the
+witness, boundary, and rejection facts.
+
+\subsection*{Naming conventions}
+
+\begin{center}\small
+\begin{tabular}{ll}
+\toprule
+Convention & Meaning \\
+\midrule
+\isa{{\isacharunderscore}of}-suffixed accessors & run accessors (\isa{scope{\isacharunderscore}of}, \isa{frontier{\isacharunderscore}of}, \isa{clean{\isacharunderscore}prefix{\isacharunderscore}of}, \dots) \\
+bare-named accessors & certificate accessors (\isa{scope}, \isa{frontier}, \isa{clean{\isacharunderscore}prefix}) \\
+\isa{rr{\isacharunderscore}} / \isa{crr{\isacharunderscore}} prefixes & run-datatype / chunk-read-record field selectors \\
+\isa{wit{\isacharunderscore}}, \isa{ex{\isacharunderscore}}, \isa{t{\isadigit{1}}{\isacharunderscore}}/\isa{t{\isadigit{2}}{\isacharunderscore}} prefixes & witness-family constants (also as suffixes: \isa{b{\isadigit{0}}{\isacharunderscore}w}, \isa{H{\isacharunderscore}ex}) \\
+\isa{fix{\isacharunderscore}} prefix & negative/boundary fixture facts \\
+\isa{layer{\isadigit{3}}{\isacharunderscore}} / \isa{l{\isadigit{4}}{\isacharunderscore}} prefixes & Layer-3 / Layer-4 fixture data and bundle facts \\
+\isa{cf{\isacharunderscore}} prefix & certificate-substrate fixture-interpretation constants and facts \\
+WF0--WF7 & the wellformedness clauses (WF3 is a deliberate gap) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% generated text of all theories
+\input{session}
+
+% optional bibliography
+\bibliographystyle{abbrv}
+\bibliography{root}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
