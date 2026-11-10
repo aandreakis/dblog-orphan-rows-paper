@@ -1,6 +1,6 @@
 # Paper source
 
-This directory mirrors the public arXiv v1 paper payload for:
+This directory holds the source files of the public arXiv v1 bundle for:
 
 > Extending DBLog-Based Incremental Snapshots to Handle Orphan Rows in CDC Pipelines  
 > Andreas Andreakis  
@@ -8,15 +8,14 @@ This directory mirrors the public arXiv v1 paper payload for:
 
 ## Contents
 
-- <code>main.tex</code> - manuscript source
-- <code>main.bbl</code> - frozen bibliography generated for the public build
-- <code>refs.bib</code> - bibliography database
-- <code>figures/</code> - four vector-PDF figures
-- <code>dblog-orphan-rows.pdf</code> - arXiv's stamped 15-page v1 PDF
+- `main.tex`: manuscript source
+- `main.bbl`: bibliography as generated for the public build
+- `refs.bib`: bibliography database
+- `figures/`: four vector-PDF figures
+- `dblog-orphan-rows.pdf`: arXiv's stamped 15-page v1 PDF
 
-ArXiv's generated <code>00README.json</code> transport metadata is not
-mirrored. Every paper payload member was compared file by file with the
-public source export.
+The `00README.json` file that arXiv generates is not copied here.
+Every source file matches the public arXiv v1 bundle byte for byte.
 
 ## Build
 
@@ -26,8 +25,8 @@ pdflatex main
 pdflatex main
 ~~~
 
-The source bundle carries <code>main.bbl</code>, so BibTeX is not required
-for the exact public rebuild. The <code>acmart</code> class is not part of the
+The source bundle carries `main.bbl`, so BibTeX is not required
+for the exact public rebuild. The `acmart` class is not part of the
 bundle and comes from the TeX distribution. The arXiv build used TeX Live 2025.
 
 ## Public record

@@ -7,12 +7,11 @@ Sources for the paper **"Extending DBLog-Based Incremental Snapshots to Handle
 Orphan Rows in CDC Pipelines"** (Andreas Andreakis, 2026) and the formal
 verification artifact that accompanies it.
 
-Many applications keep the same data in more than one datastore. One datastore
-is the source and the others are sinks, such as a search index or a data
-warehouse. Change data capture (CDC) keeps the sinks up to date. DBLog-based
-incremental snapshots, as adopted by Debezium and Flink CDC, bootstrap a sink
-by reading the source tables in chunks interleaved with the log, without
-blocking writes.
+Many applications replicate data from a source database to downstream sinks
+such as search indexes or data warehouses using change data capture (CDC).
+DBLog-based incremental snapshots, as adopted by Debezium and Flink CDC,
+bootstrap a sink by reading the source tables in chunks interleaved with the
+log, without blocking writes.
 
 After the bootstrap a sink can drift when it loses change events or receives
 unintended writes. Even a repeated bootstrap can leave orphan rows, which are
@@ -20,23 +19,23 @@ still in the sink but no longer at the source. In DBLog's original design a
 chunk emits only the latest state of the rows the table still contains, so it
 does not handle orphan rows.
 
-The paper extends DBLog so that it also deletes orphan rows. A chunk read
-already knows which keys of its range the select did not return. The connector
-emits this as a new kind of event that sinks apply as deletes. The paper also
-adds a repair request. An external process hands orphan candidates to the
-connector, the connector checks them with its own read, and it emits these
-events only for keys it confirms absent at the source.
+The paper extends DBLog so that a pipeline can also delete orphan rows. A
+chunk read already knows which keys in its range the query did not return. The
+connector emits that information as a chunk info record, or as per-key absence
+events, and sinks apply it as deletes. The paper also adds a
+`verify-keys-absent` repair request: an external drift process submits
+suspected orphan keys, and the connector checks them at the source between
+watermarks and emits absence events only for keys it confirms absent.
 
-This gives three modes. In the first, every chunk pass removes the orphans it
-finds. In the second, an external drift process hands suspected orphans to the
-connector, which deletes only those it confirms absent. The third combines
-both and is the one the paper recommends.
+These components support three operating modes: removing orphans during every
+chunk pass, running an external drift process that submits suspected orphans
+through the repair request, or combining both, which the paper recommends.
 
 The core safety and convergence results are machine-checked in Isabelle/HOL and
 Lean 4. The proofs cover the stream-level algorithm under assumptions that the
 paper names, and they do not verify a running connector. Three bounded TLA+
-models of the connector protocol are checked with the TLC model checker. Model
-checking gives evidence. It is not a proof.
+models of the connector protocol are checked with the TLC model checker,
+providing operational evidence rather than a proof.
 
 **Links:** [paper on arXiv](https://arxiv.org/abs/2611.10810) ·
 [archived artifact (Zenodo)](https://doi.org/10.5281/zenodo.24035424) ·
@@ -142,7 +141,7 @@ diff -r DBLog_Orphan_Absence_artifact-1.0 formal
 
 No output from `diff` means the trees are identical. Run it before building
 the Lean port or running TLC, because both write their output into the tree.
-Zenodo remains the archival identifier. This repository is a mirror.
+The Zenodo record remains the archival copy, and this repository mirrors it.
 
 ## Versions and DOIs
 
@@ -209,7 +208,7 @@ GitHub's **Cite this repository** button reads [CITATION.cff](CITATION.cff).
 - **DBLog: A Generic Change-Data-Capture Framework**, Netflix Tech Blog, 2019.
   [Post](https://netflixtechblog.com/dblog-a-generic-change-data-capture-framework-69351fb9099b).
 
-## Licence
+## License
 
 - **Paper text and figures** (`paper/main.tex`, `paper/main.bbl`,
   `paper/refs.bib`, `paper/figures/` and reader documentation): Creative
@@ -217,7 +216,7 @@ GitHub's **Cite this repository** button reads [CITATION.cff](CITATION.cff).
   [LICENSES/CC-BY-4.0.txt](LICENSES/CC-BY-4.0.txt).
 - **Verification artifact** (`formal/`): BSD 3-Clause. See [LICENSE](LICENSE),
   copied from the archived artifact. The dependency sessions inside the
-  artifact retain their own licence notices.
+  artifact retain their own license notices.
 
 ## Author
 

@@ -6,10 +6,10 @@ title: >-
   Extending DBLog-Based Incremental Snapshots to Handle Orphan Rows in CDC
   Pipelines: paper sources and formal verification artifact
 abstract: >-
-  Information hub for the paper "Extending DBLog-Based Incremental Snapshots
-  to Handle Orphan Rows in CDC Pipelines." Contains the paper sources as
-  posted to arXiv and the complete formal verification artifact (Isabelle/HOL,
-  Lean 4, TLA+), byte-identical to its archived Zenodo version 1.0 deposit.
+  Paper sources and formal verification artifact for "Extending DBLog-Based
+  Incremental Snapshots to Handle Orphan Rows in CDC Pipelines." The paper
+  sources are those posted to arXiv. The artifact (Isabelle/HOL, Lean 4, TLA+)
+  is byte-identical to its archived Zenodo version 1.0 deposit.
 type: software
 authors:
   - family-names: Andreakis
